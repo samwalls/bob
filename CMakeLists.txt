@@ -8,12 +8,13 @@ project(bob) # this sets the project name
 ###############################################################################
 
 include_directories(${PROJECT_SOURCE_DIR}/include/)
-file(GLOB_RECURSE includes     include/*.h include/*.hpp)
-file(GLOB_RECURSE sources      src/*/*.cpp)
-file(GLOB_RECURSE sources_test src/test/*.cpp)
+file(GLOB_RECURSE bob_includes     include/bob/*.h include/bob/*.hpp)
+list(APPEND bob_includes           include/bob.h)
+file(GLOB_RECURSE bob_sources      src/bob/*.cpp)
+file(GLOB_RECURSE bob_sources_test src/bob/test/*/*.cpp)
 #remove tests from source files
 if (DEFINED ${sources_test})
-    list(REMOVE_ITEM sources       ${sources_test})
+    list(REMOVE_ITEM bob_sources       ${sources_test})
 endif()
 
 ###############################################################################
@@ -21,11 +22,12 @@ endif()
 ###############################################################################
 
 # create the bob library
-add_library(boblib ${sources} ${includes})
+add_library(boblib ${bob_sources} ${bob_includes})
 target_compile_options(boblib PUBLIC -std=c++1y -Wall -Wfloat-conversion)
 set_target_properties(boblib PROPERTIES OUTPUT_NAME bob)
+set_target_properties(boblib PROPERTIES LINKER_LANGUAGE CXX)
 
-# create the bob executable and link the created turmac library
+# create the bob executable and link the created bob library
 add_executable(bob src/main.cpp)
 target_compile_options(bob PUBLIC -std=c++1y -Wall -Wfloat-conversion)
 target_link_libraries(bob boblib)
@@ -74,7 +76,7 @@ if(GTEST_FOUND)
 
     target_link_libraries(unit_tests PUBLIC
             ${GTEST_BOTH_LIBRARIES}
-            runtm
+            boblib
             )
 
     target_include_directories(unit_tests PUBLIC
@@ -89,7 +91,7 @@ endif()
 
 # All install commands get the same destination. this allows us to use paths
 # relative to the executable.
-install(TARGETS bob DESTINATION example_destination)
+# install(TARGETS bob DESTINATION example_destination)
 
 # This is basically a repeat of the file copy instruction that copies the
 # resources in the build directory, but here we tell cmake that we want it
