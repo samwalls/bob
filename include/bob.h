@@ -9,5 +9,7 @@
  */
 
 #include "bob/Bot.h"
+#include "bob/MarkovBot.h"
+#include "bob/MarkovChain.h"
 
 #endif //BOB_H
