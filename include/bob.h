@@ -11,5 +11,6 @@
 #include "bob/Bot.h"
 #include "bob/MarkovBot.h"
 #include "bob/MarkovChain.h"
+#include "bob/MarkovChainBuffer.h"
 
 #endif //BOB_H

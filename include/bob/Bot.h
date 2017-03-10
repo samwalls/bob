@@ -22,15 +22,28 @@ class Bot {
   /// Properly tokenize the input such that it is usable for the bot.
   static std::vector<std::string> tokenize(std::istream& input) {
     std::vector<std::string> tokens = std::vector<std::string>();
-    for (std::string word; !word.empty(); input >> word) {
+    std::string word;
+    //[^!?.,:;=+\-_'`"}\)]
+    const std::regex punctuation(R"(^([([{"`'])?(\w*)([)\]}"`'])?([!?.,:;=+\-_]*)$)");
+    for (input >> word; !input.eof(); input >> word) {
       //we have a word, check for punctuation such as "," or ".".
       //3 groups, separating prefix punctuation, word, suffix punctuation and extra punctuation that may be considered
       //tokens in their own right, ".", ":", ";" etc..
-      std::regex punctuation("([([{\"`']?)([^!?.,:;=+\\-_'`\"}\\)]*)([([{\"`']?)([!?.,:;=+\\-_])*");
       std::smatch match;
       if (std::regex_search(word, match, punctuation)) {
-        for (unsigned int i = 1; i < match.size(); i++)
-          tokens.push_back(match[i].str());
+        if (match[1].str() != "") {
+          std::string m = match[1].str();
+          tokens.push_back(m);
+        } if (match[2].str() != "") {
+          std::string m = match[2].str();
+          tokens.push_back(m);
+        } if (match[1].str() != "" && match[3].str() != "") {
+          std::string m = match[3].str();
+          tokens.push_back(m);
+        } if (match[4].str() != "") {
+          std::string m = match[4].str();
+          tokens.push_back(m);
+        }
       } else
         tokens.push_back(word);
     }

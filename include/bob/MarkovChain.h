@@ -1,7 +1,9 @@
 #ifndef BOB_MARKOVCHAIN_H
 #define BOB_MARKOVCHAIN_H
 
-#include <map>
+#include "bob/MarkovChainBuffer.h"
+
+#include <unordered_map>
 #include <vector>
 #include <string>
 
@@ -28,7 +30,7 @@ class MarkovChain {
 
   /// Update the coincidental frequency between tokens and nextTokens.
   /// \return the coincidental frequency between tokens and nextTokens
-  unsigned long update(std::vector<std::string> tokens, std::vector<std::string> nextTokens);
+  unsigned long update(MarkovChainBuffer<DEFAULT_KEY_BUFFER_SIZE> tokens, MarkovChainBuffer<DEFAULT_VAL_BUFFER_SIZE> nextTokens);
 
   /// \return the next tokens probabilistically likely to be seen next the seed tokens
   std::vector<std::string> next(std::vector<std::string> tokenSeeds);
@@ -46,7 +48,7 @@ class MarkovChain {
 
   /// Analogous to "adjacency matrix": maps tokens -> token -> the frequency of the second token appearing directly
   /// after the first.
-  std::map<std::vector<std::string>, std::map<std::vector<std::string>, unsigned long>> frequencies;
+  std::unordered_map<MarkovChainBuffer<DEFAULT_KEY_BUFFER_SIZE>, std::unordered_map<MarkovChainBuffer<DEFAULT_VAL_BUFFER_SIZE>, unsigned long>> frequencies;
 
   /// Compute the coincidental frequency between tokens.
   /// \param keyBufferSize number of tokens to use as a key
@@ -57,13 +59,12 @@ class MarkovChain {
   void computeFrequency(std::vector<std::string> tokens);
 
   /// helper function to get a list, sliced from another list
-  static std::vector<std::string> slice(std::vector<std::string> tokens, unsigned long position, unsigned long size) {
-    std::vector<std::string> l = std::vector<std::string>();
-    if (size > tokens.size() || position + size > tokens.size())
-      throw std::invalid_argument("to slice, the size must fit within the input list");
-    for (unsigned long i = 0; i < size; i++)
-      l.push_back(tokens[position + i]);
-    return l;
+  template<unsigned long SIZE>
+  static MarkovChainBuffer<SIZE> slice(std::vector<std::string> tokens, unsigned long position) {
+    MarkovChainBuffer<SIZE> slice = MarkovChainBuffer<SIZE>();
+    for (unsigned long i = 0; i < SIZE; i++)
+      slice.data[i] = tokens.data()[position + i];
+    return slice;
   }
 };
 
