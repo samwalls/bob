@@ -1,23 +1,11 @@
 # Bob
 ###### A distant relative of Eliza - so we think.
 
-Bob is a chatbot built using very similar principles to that of ELIZA (Weizenbaum J., 1966 [1]).
+Bob is a chatbot built using very similar principles to that of ELIZA (Weizenbaum J., 1966 [1]) in combination with the use of a Markov chain, trained on a corpus of input text, for added interest.
 
-# Building Bob
+# Running Bob
 
-To build bob, use the provided cmake file (you will need cmake installed):
-
-```
-mkdir build
-cd build
-cmake .. && make
-```
-
-You should, assuming this did not fail, then be able to run bob with:
-
-```
-./bob
-```
+Bob is written in python 2, so run `main.py` using `python2`, if you have it.
 
 # References
 [1] - Weizenbaum, J., 1966. ELIZA—a computer program for the study of natural language communication between man and machine. Communications of the ACM, 9(1), pp.36-45.
