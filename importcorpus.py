@@ -1,3 +1,4 @@
+from __future__ import print_function
 import csv
 import os
 import sys
@@ -18,9 +19,9 @@ inputPath = sys.argv[1]
 script_dir = os.path.dirname(__file__)
 
 abs_input_dir = os.path.join(script_dir, inputPath)
-print abs_input_dir
+#print abs_input_dir
 abs_output_dir = os.path.join(script_dir, "data/corpus.txt")
-print abs_output_dir
+#print abs_output_dir
 
 with open(abs_input_dir,"rb") as movie_lines, open(abs_output_dir, "wb") as txtout:
 	#we can't read multi-character delimiters, so replace this thing with @ (doesn't exist in the file)
@@ -28,4 +29,4 @@ with open(abs_input_dir,"rb") as movie_lines, open(abs_output_dir, "wb") as txto
     for row in movie_lines:
         count = len(row[4])
         if count >= 5:
-            txtout.write(row[4])
+            print(row[4], file=txtout)
