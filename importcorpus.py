@@ -2,6 +2,8 @@ from __future__ import print_function
 import csv
 import os
 import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 # For transforming the  files into a processable source for the markov bot.
 
@@ -29,4 +31,4 @@ with open(abs_input_dir,"rb") as movie_lines, open(abs_output_dir, "wb") as txto
     for row in movie_lines:
         count = len(row[4])
         if count >= 5:
-            print(row[4], file=txtout)
+            print(row[4].decode("iso-8859-2").encode("utf-8"), file=txtout)

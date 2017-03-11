@@ -1,16 +1,15 @@
 #import markovbot
 import bob
 import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
-#if len(sys.argv) < 2:
-#	sys.stderr.write("expected path to a training corpus\n")
-#	sys.exit(1)
-#path = sys.argv[1]
+if len(sys.argv) < 2:
+	sys.stderr.write("expected path to a training corpus\n")
+	sys.exit(1)
 
-#bot = markovbot.MarkovBot(2, 1, path)
-#bot.train()
-
-bot = bob.Bob()
+path = sys.argv[1]
+bot = bob.Bob(path)
 
 # start a REPL
 inp = ""
