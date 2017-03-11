@@ -1,0 +1,123 @@
+\documentclass[]{article}
+\usepackage{times}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{subfig}
+\usepackage{pgfplots}
+\usepackage{filecontents}
+\usetikzlibrary{arrows,automata}
+\usepackage[latin1]{inputenc}
+\usepackage[round]{natbib}
+\lstset{
+  basicstyle=\fontfamily{lmvtt}\selectfont\small,
+  columns=fullflexible,
+}
+
+%opening
+\title{CS3105: Artificial Intelligence - The Imitation Game}
+\author{ID: 150013828}
+
+\begin{document}
+
+\maketitle
+
+%\begin{figure}[!htbp]
+%	\centering
+%	\begin{minipage}[b]{0.4\textwidth}
+%		\begin{tikzpicture}
+%		\begin{axis}[ xmin=0, xmax=15, xlabel=Nodes, ylabel=Time, legend style={at={(0.5,-0.1)},anchor=north} ]
+%		\addplot table [x=nodes, y=dst, col sep=comma] {movie.csv};
+%		\addlegendentry{dst}
+%		\addplot table [x=nodes, y=scp, col sep=comma] {movie.csv};
+%		\addlegendentry{scp}
+%		\addplot table [x=nodes, y=sftp, col sep=comma] {movie.csv};
+%		\addlegendentry{sftp}
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{movie.mjpeg - 4.1M\label{fig:compar3}}
+%	\end{minipage}
+%	\hfill
+%	\begin{minipage}[b]{0.4\textwidth}
+%		\begin{tikzpicture}
+%		\begin{axis}[ xmin=0, xmax=15, xlabel=Nodes, ylabel=Time, legend style={at={(0.5,-0.1)},anchor=north} ]
+%		\addplot table [x=nodes, y=dst, col sep=comma] {tfatf.csv};
+%		\addlegendentry{dst}
+%		\addplot table [x=nodes, y=scp, col sep=comma] {tfatf.csv};
+%		\addlegendentry{scp}
+%		\addplot table [x=nodes, y=sftp, col sep=comma] {tfatf.csv};
+%		\addlegendentry{sftp}
+%		\end{axis}
+%		\end{tikzpicture}
+%		\caption{The Fast and the Furious - 302M\label{fig:compar4}}
+%	\end{minipage}
+%\end{figure}
+
+\section{Overview} In this report, a chatbot called "bob" is presented. Bob is related very closely to \citeauthor{Weizenbaum}'s ELIZA [\citenum{Weizenbaum}], in that it performas a series of pattern-matching and string manipulations. Bob also has the ability to train a markov chain in an attempt to add extra conversational interest.
+
+There is also a discussion about the Turing test and how I find that it fails to capture an ethical measurement of the machine in question - which might be important to intelligence.
+
+\section{Chatbot}
+\subsection{ELIZA-Like String Replacement}
+\cite{Weizenbaum}
+
+\subsection{Markov Chains}
+
+\section{Examples}
+
+For these examples, the markov chain is trained using n-grams of the text utterances from a large corpus provided by \cite{Danescu-Niculescu-Mizil+Lee:11a}. The corpus comprises of movie dialogue which should provide the markov chain a reasonable vocabulary for conversations, which is what we want. A python script \emph{importcorpus.py} is provided which preprocesses the raw provided text into something more suitable for n-gram extraction (a fair proportion of the provided text is specifically for taxonomy). One could use the script to recreate the testing conditions described here.
+\\\\
+There is also a setup script which automatically downloads the corpus and performs the aforementioned preprocessing for use in bob:
+\begin{lstlisting}[language=bash, frame=single]
+bash setup.sh
+\end{lstlisting}
+
+\subsection{Running Bob}
+
+\subsection{A Chat With CleverBot}
+
+\section{Evaluation}
+
+\section{The Turing Test}
+
+This section serves as a mini-essay about how I feel chatbots relate to the Turing test, and how the Turing test relates to general AI.
+
+\paragraph{Chatbots} Chatbots serve as, among many other things, a benchmark of progress towards the defeat of the \emph{Turing test}. Their 
+
+\paragraph{The Game} One objection Turing raised against himself was the following:
+\begin{quote}
+	"The game may perhaps be criticised on the ground that the odds are weighted too heavily against the machine. If the man were to try and pretend to be the machine he would clearly make a very poor showing. He would be given away at once by slowness and inaccuracy in arithmetic. May not machines carry out something which ought to be described as thinking but which is very different from what a man does? This objection is a very strong one, but at least we can say that if, nevertheless, a machine can be constructed to play the imitation game satisfactorily, we need not be troubled by this objection." [\citenum{Turing}]
+	
+	\cite{Turing}
+\end{quote}
+asd
+
+\paragraph{Ethical Concerns \& "The Theological Objection"} The theological objection was given by Turing: "Thinking is a function of man's immortal soul. God has given an immortal soul to every man and woman, but not to any other animal or to machines. Hence no animal or machine can think." [\citenum{Turing}]
+
+While I am in full agreement with his following refutation, I find that perhaps there is a kernel of truth behind this objection - which may sprout into a direction Turing was not anticipating - which is to say that the provided criteria of the \emph{Turing test} do not necessitate what traditionally constitutes a soul, and that "soul-like" criteria might be required in order to fully create something that is \emph{sufficiently intelligent}; even if this is in imitation.
+
+Turing's refutation to this objection was, in summary, to say: \emph{what's stopping a deity from granting machines a soul too?} Like I noted, I am in agreement with that; regardless of whether or not one believes in god, this seems sound. What I would like to argue however is that the Turing test fails to categorize the very soul potentially granted to an intelligent machine. And, that litmus tests, such as the Turing test, are less meaningful if the "soul-like" aspects of intelligence are left out.
+
+In claiming that a machine has no soul (as the theological objection does), without needing not to go over the physical nature of the soul, what is this saying? I think that it is to say:
+\begin{enumerate}
+	\item a machine carries no "free will"
+	\item a machine has a vanishing conception of moral values, let alone that of a "nature" resulting in the collection of those values
+	\item a machine carries no "immortal" content beyond the inherent notional facts of its existence
+\end{enumerate}
+
+\noindent
+Does my poor chatbot, Bob, exhibit any of these? Sadly not. But, has any machine that has ever passed the Turing test? (I would forgive a machine for failing on point 3 however, as it is somewhat more difficult, or less possible to prove).
+I think that, of these, \emph{point two} is the most relevant to lead on to my point. Humans \emph{certainly} have moral values. And, these influence our actions. The deepest of one's moral values are very difficult to move against. If future machines, intelligent machines, do not have a similar moral system then what conceivable acts could be undertaken in the name of, or by virtue of, their intelligence - I wonder? Could it be worse than what we are already capable of inflicting on each other?
+
+It is becoming increasingly obvious in the field of AI that cutting-edge machines, capable of performing more or less autonomously in their environment, \emph{need} to find a focus for the satisfactory resolve of ethical questions. Machines \emph{now} have the capability to leave lives permanently altered as a result of their own decisions: they bear some responsibility for any death concerning driverless-cars (not to discount their inherent safety over a human's ability, but to note that, accidents happen, and that the driverless-cars will occasionally have to make tough decisions); they have some convinced that they are worthy as social entities\footnote{https://www.theguardian.com/world/2016/nov/20/japan-stranded-singles-virtual-love}\footnote{http://time.com/3998563/virtual-love-japan/}. But, there is a vacuum left behind in the wake of our own magnetic attraction to anthropomorphize the \emph{empty shells of intelligence} that are created today. I think we should be weary of the rapid impact AI could have on the meaning we all place in our lives. If the AI could always do something better, why would we want to do anything useful? Maybe it is the perfect way to live, maybe it's not - caution, is what I offer here.
+
+For most people, I feel that the Turing test is somewhat already defeated, of course machines can think, we say - perhaps even out of hubris to sudden, recent progress, thus - I think the important question now is not "can machines think?", but \emph{can thinking machines live among us} - to what end?
+
+\bibliography{ref}
+\bibliographystyle{plain}
+
+\end{document}

@@ -1,2 +1,8 @@
 *.pyc
 data/
+tex/*.aux
+tex/*.pdf
+tex/*.bbl
+tex/*.blg
+tex/*.synctex.gz
+tex/*.log
