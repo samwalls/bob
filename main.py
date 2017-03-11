@@ -26,7 +26,7 @@ try:
 except (KeyboardInterrupt, SystemExit):
 	#this is fine
 	print "\n\n[you leave abruptly...]"
-	print "\nbob: was it something I said?"
+	print "\nbob: Was it something I said?"
 	sys.exit(0)
 
-print "\nbob: see you later"
+print "\nbob: See you later..."

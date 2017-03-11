@@ -44,7 +44,8 @@ class MarkovBot(object):
 			buff.append(el)
 		v = self.__ngrams[k]
 		position = 0
-		while position < len(buff) and position < 20:
+		# the output should be a sentence, end when the last token in the buffer is an "endToken"
+		while k in self.__ngrams and not MarkovBot.endToken.search(buff[len(buff) - 1]) and position < len(buff) and position < 20:
 			v = self.__ngrams[k]
 			# TODO use ngram frequency to determine probability
 			# randomly pick a value to move to
@@ -57,5 +58,8 @@ class MarkovBot(object):
 			position += 1
 		output = ""
 		for item in buff:
-			output = output + " " + item
+			if output == "":
+				output = item.title()
+			else:
+				output = output + " " + item
 		return output
