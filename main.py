@@ -1,13 +1,16 @@
-import markovbot
+#import markovbot
+import bob
 import sys
 
-if len(sys.argv) < 2:
-	sys.stderr.write("expected path to a training corpus\n")
-	sys.exit(1)
-path = sys.argv[1]
+#if len(sys.argv) < 2:
+#	sys.stderr.write("expected path to a training corpus\n")
+#	sys.exit(1)
+#path = sys.argv[1]
 
-bot = markovbot.MarkovBot(2, 1, path)
-bot.train()
+#bot = markovbot.MarkovBot(2, 1, path)
+#bot.train()
+
+bot = bob.Bob()
 
 # start a REPL
 inp = ""
