@@ -62,10 +62,22 @@
 There is also a discussion about the Turing test and how I find that it fails to capture an ethical measurement of the machine in question - which might be important to intelligence.
 
 \section{Chatbot}
-\subsection{ELIZA-Like String Replacement}
-\cite{Weizenbaum}
+There are two main components (differing techniques) as to how Bob generates text.
+\paragraph{String Replacement} In the file "bob.py" one will see all the string replacement rules that define how bob will transform the input string. First a pattern is matched among the "builtinKeys" which looks at overarching sentence structure. The keys map to a formatting string, with formatting variables analagous to regex capture groups for which a "{0}" for instance will be replaced in the end with the entire matched key; a "{1}" with the first capture group defined in the key etc.. This process is very similar to that discussed in the initial implementation of ELIZA - \cite{Weizenbaum}.
 
-\subsection{Markov Chains}
+\paragraph{Markov Chains} In "markovbot.py" a bot is described which does something very different to the aforementioned technique. The bot must first be \emph{trained} on a plain text file. In this training process, coincident n-grams are mapped to each other - in this implementation, a bigram on the left maps to a single word on the right.
+\\\\
+This process was brought to my attention by a very helpful \emph{Stack Overflow} post, which gives a conceptual overview of this process, answered by the user "Nocker": (http://stackoverflow.com/questions/5306729/how-do-markov-chain-chatbots-work).
+\\\\
+This then successively moves through the file. E.g. "The quick brown fox jumps..." is broken into the following relations:
+\begin{itemize}
+	\item "The quick" $\rightarrow$ "brown"
+	\item "quick brown" $\rightarrow$ "fox"
+	\item "brown fox" $\rightarrow$ "jumps"
+\end{itemize}
+... and so on.
+\\\\
+The result of this training process is a map which can be called upon, given any bigram as a key. When generating the text, first a random bigram is chosen, and then as these tokens build up a buffer, the next key defines itself.
 
 \section{Examples}
 
@@ -78,23 +90,263 @@ bash setup.sh
 
 \subsection{Running Bob}
 
-\subsection{A Chat With CleverBot}
+A makefile is also present which makes the process of setup \emph{even easier}. Simply run:
+
+\begin{lstlisting}[language=bash, frame=single]
+make
+\end{lstlisting}
+
+to download the corpus and process it, and then:
+
+\begin{lstlisting}[language=bash, frame=single]
+python2 main.py data/corpus.txt
+\end{lstlisting}
+
+Will begin training and start the chat session.
+
+\subsection{A Conversation With Bob}
+
+As it turns out, with the correct training corpus (this is provided in the setup script), Bob takes on a very strange personality.
+
+\begin{verbatim}
+you: hello
+
+bob: how are you? The invisible girl ...
+
+you: well, I'm not a girl
+
+bob: please explain further Whatever the reason I here to see you , Sweetheart .
+
+you: ...
+
+bob: what about ...? Denny over Christmas and I had to pawn that to get a 
+strangle-hold on it .
+
+you: Who's Denny?
+
+bob: Do you know? Cathedral , all right .
+
+you: no
+
+bob: where do you think this negativity is coming from? A gotta get me 
+something I can take care of myself .
+
+you: I don't know
+
+bob: take your time... Interference scan .
+
+you: you're crazy
+
+bob: how do you feel about I'm crazy? An unfortunate phrase , it isn I hungry 
+and scared .
+
+you: are you ok?
+
+bob: Do you know? Dad died .
+
+you: that's awful, I'm sorry
+
+bob: That's fine Thousands killed .
+
+you: what!?
+
+bob: What! - I'm not too sure what the answer is... I detect a rebuke ?
+
+you: I'm not sure either...
+
+bob: That's a shame Assassinated two men do it , what all the shootin for , 
+will you tell me ?
+
+you: ^C
+
+[you leave abruptly...]
+
+bob: Was it something I said?
+\end{verbatim}
+
+\subsection{Second Conversation With Bob}
+\begin{verbatim}
+you: hi
+
+bob: how are you? Hundred dollars ?
+
+you: yes please
+
+bob: that's interesting Gynde for 10 : a mad dog .
+
+you: Do I not get $100?
+
+bob: why not? Guys better I feel about him .
+
+you: how does this work then?
+
+bob: what's on your mind? Corey ?
+
+you: no, $100
+
+bob: why not? Here another wire , sir .
+
+you: how rude...
+
+bob: tell me about how rude... And bitters and blue ruin you spill out the 
+light ?
+
+you: are you going to give me money or not?
+
+bob: why not? Home Mortgage .
+
+you: my mortgage too!?
+
+bob: Do you know? Gallons an hour .
+
+you: err?
+
+bob: Can you tell me? err? Unharmed if necessary .
+
+you: not really
+
+bob: where do you think this negativity is coming from? Didn return from that 
+village ?
+
+you: Village? St Andrews you mean?
+
+bob: I think you maybe know more about this than you lead on Slaw it OUT 
+RAY-GEOUS !
+
+you: believe me, I think you're clearly the most knowledgeable person here
+
+bob: what makes you feel that way - at eight ...
+
+you: your use of language is so amusing
+
+bob: I see... Giving us a way out .
+
+you: no, no, not at all...
+
+bob: where do you think this negativity is coming from? Inches !
+
+you: I don't think I want to talk to you any more
+
+bob: what would it mean if you had to talk to me any more? Rope this banker 
+tomorrow and tell the truth !
+
+you: goodbye
+
+bob: oh? Next Friday .
+
+you: maybe...
+
+bob: how does that make you feel? Racks over there ?
+
+you: ^C
+
+[you leave abruptly...]
+
+bob: Was it something I said?
+\end{verbatim}
+\subsection{Bob \& CleverBot}
+
+\begin{verbatim}
+you: Nice to see you here.
+
+bob: I see... That seriously .
+
+you: Yes :D
+
+bob: what else? Out A soft side .
+
+you: For me to be happy.
+
+bob: what else? Gets here in five minutes ...
+
+you: But how will I know it's you
+
+bob: where do you think this negativity is coming from? The Underworld .
+
+you: I don't know.
+
+bob: take your time... Doing .
+
+you: Come to me.
+
+bob: explain... We !
+
+you: You don't have to know. I just feel empty
+
+bob: where do you think this negativity is coming from? Service history .
+
+you: Outer space.
+
+bob: what else? Play at present .
+
+you: What else what?
+
+bob: I think you maybe know more about this than you lead on Is Gretchen .
+
+you: What do you know about?
+
+bob: where do you think this negativity is coming from? How will I be going .
+
+you: I don't know I just want You to answer that queston.
+
+bob: is me to answer that queston. essential? Often , fell in love ?
+
+you: If you want me to answer your question you must answer to my question 
+first.
+
+bob: what about If Me Want You To Answer Your Question Me Must Answer To Your 
+Question First.? Fresh new outlook , a hostess and a spoiled brat of a rich 
+man .
+
+you: What question?
+
+bob: I think you maybe know more about this than you lead on Underpowered .
+
+you: I know a lot about you.
+
+bob: where do you think this negativity is coming from? Mists of time .
+
+you: 
+I think they come from habital worlds that can house water and have a similar 
+atmosphere to Earth.
+bob: is there anything else I can help you with? True - and the Santa Fe ?
+
+you: 
+
+bob: what's on your mind? Those that would marry King Westley .
+
+you: I don't know. A large mass of things currently.
+
+bob: take your time... You refuse , Oleg !
+
+you: Do you like me?
+
+bob: Do you know? Already went back home .
+
+you: Yes
+
+bob: Yes . Laurie Strode -- Jamie mother -- Taking the train tonight -- and he 
+-- remarried his WIFE ?
+
+you: quit
+
+bob: See you later...
+\end{verbatim}
+
+As it turns out, CleverBot and Bob are quite hostile around each other when it comes to answering questions.
 
 \section{Evaluation}
+Bob performs well in that he's quite funny (due to the given training data), but I would say that in both of these examples, it's clear that Bob's grasp of both correct syntax and semantics are somewhat skewed. The string-replacement section of Bob is not quite deterministic, but given a pattern you definitely know with a probability what you are going to get back - however, the markov chain kicks in afterwards and cuts through this predictibility with something that looks structurally sound (because the markov chain works off of coincident n-grams), but can semantically mean nothing. This is because, the words transition in the chain is chosen completely at random - as long as the words are structurally linked then they have some probability of showing up next to each other. On the whole though, it worked surprisingly well. I had tried with other, much shorter corpuses (such as the works of shakespeare), but it didn't quite work as well. The film corpus seems perfect for this purpose though.
+\\\\
+The chat with cleverbot did show some weaknesses in the simple string replacement method I use has no concept of the conversation's context.
+\\\\
+In a future iteration, I would like to experiment with feeding words from the conversation itself into the markov chain - thus effectively creating new vocabulary and sentence structure on-the-fly.
 
 \section{The Turing Test}
 
 This section serves as a mini-essay about how I feel chatbots relate to the Turing test, and how the Turing test relates to general AI.
 
 \paragraph{Chatbots} Chatbots serve as, among many other things, a benchmark of progress towards the defeat of the \emph{Turing test}. Their 
-
-\paragraph{The Game} One objection Turing raised against himself was the following:
-\begin{quote}
-	"The game may perhaps be criticised on the ground that the odds are weighted too heavily against the machine. If the man were to try and pretend to be the machine he would clearly make a very poor showing. He would be given away at once by slowness and inaccuracy in arithmetic. May not machines carry out something which ought to be described as thinking but which is very different from what a man does? This objection is a very strong one, but at least we can say that if, nevertheless, a machine can be constructed to play the imitation game satisfactorily, we need not be troubled by this objection." [\citenum{Turing}]
-	
-	\cite{Turing}
-\end{quote}
-asd
 
 \paragraph{Ethical Concerns \& "The Theological Objection"} The theological objection was given by Turing: "Thinking is a function of man's immortal soul. God has given an immortal soul to every man and woman, but not to any other animal or to machines. Hence no animal or machine can think." [\citenum{Turing}]
 
